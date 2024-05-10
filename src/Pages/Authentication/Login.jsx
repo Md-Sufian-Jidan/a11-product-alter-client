@@ -27,8 +27,10 @@ const Login = () => {
         signIn(email, password)
             .then(res => {
                 console.log(res.user);
-                toast.success('User Login Successfully');
-                navigate(location?.state ? location?.state : '/');
+                if (res.user) {
+                    toast.success('User Login Successfully');
+                    navigate(location?.state ? location?.state : '/');
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -39,8 +41,10 @@ const Login = () => {
         googleLogin()
             .then(res => {
                 console.log(res.user);
-                toast.success('User Login Successfully');
-                navigate(location?.state ? location?.state : '/');
+                if (res.user) {
+                    toast.success('User Login Successfully');
+                    navigate(location?.state ? location?.state : '/');
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -51,8 +55,10 @@ const Login = () => {
         githubLogin()
             .then(res => {
                 console.log(res.user);
-                toast.success('User Login Successfully');
-                navigate(location?.state ? location?.state : '/');
+                if (res.user) {
+                    toast.success('User Login Successfully');
+                    navigate(location?.state ? location?.state : '/');
+                }
             })
             .catch((err) => {
                 console.log(err);
