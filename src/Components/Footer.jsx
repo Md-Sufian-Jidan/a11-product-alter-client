@@ -7,7 +7,7 @@ const Footer = () => {
                         <a href="#">
                             <img className="w-auto h-7" src="" alt="" />
                         </a>
-                        <p>product alter</p>
+                        <p className="text-xl text-white">product alter</p>
 
                         <div className="flex flex-wrap justify-center mt-6 -mx-4">
                             <a href="#" className="mx-4 text-sm text-gray-600 transition-colors duration-300 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-400" aria-label="Reddit"> Home </a>
