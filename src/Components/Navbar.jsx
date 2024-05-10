@@ -25,21 +25,21 @@ const Navbar = () => {
 
     const handleLogout = () => {
         logOut()
-            .then((result) => {
+            .then(() => {
                 Swal.fire({
                     icon: "success",
                     title: "wow?",
-                    text: "User Login Successfully",
+                    text: "User log Out Successfully",
                 });
-                console.log(result.user);
             })
             .catch(err => {
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Something went wrong!",
-                });
-                console.log(err);
+                if (err) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong!",
+                    });
+                }
             })
     }
     return (

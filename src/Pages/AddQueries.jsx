@@ -2,25 +2,41 @@ import { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { AuthContext } from '../Context/AuthProvider';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const AddQueries = () => {
     const { user } = useContext(AuthContext);
     const [startDate, setStartDate] = useState(new Date());
-    console.log(user.email);
-    const handleFormSubmit = (e) => {
+    const navigate = useNavigate();
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
         const form = e.target;
-        const name = form.name.value;
-        const brand = form.brand.value;
-        const photo = form.photo.value;
-        const date = startDate;
+        const productName = form.name.value;
+        const productBrand = form.brand.value;
+        const productImgUrl = form.photo.value;
+        const queryTitle = form.better.value;
+        const boycottingReasonDetails = form.description.value;
+        const dateTime = startDate;
         const addUser = {
             email: user?.email,
             name: user?.displayName,
             image: user?.photoURL
         }
-        console.log(name, brand, photo, addUser, date);
-        // console.log('object');
+        const product = {
+            productName, productBrand, productImgUrl, dateTime, queryTitle, boycottingReasonDetails, addUser
+        };
+        console.log(product);
+        // save data in db
+        try {
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/add-product`, product)
+            toast.success('Job Data Updated Successfully!')
+            navigate('/my-queries')
+        } catch (err) {
+            console.log(err)
+            toast.error(err.message)
+        }
     }
     return (
         <div className='bg-[url()]'>

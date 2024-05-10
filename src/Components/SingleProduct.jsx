@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useLoaderData } from 'react-router-dom';
+import { AuthContext } from '../Context/AuthProvider';
 
 const SingleProduct = () => {
+    const { user } = useContext(AuthContext);
     const [startDate, setStartDate] = useState(new Date());
     const query = useLoaderData();
-    const { _id, productName, queryTitle, productBrand, dateTime, boycottingReasonDetails, user } = query || {}
+    const { _id, productName, queryTitle, productBrand, dateTime, boycottingReasonDetails, addUser } = query || {}
     console.log(query);
     return (
         <div className='flex flex-col md:flex-row justify-around gap-5  items-center min-h-[calc(100vh-306px)] max-w-6xl mx-auto my-5'>
@@ -24,16 +26,19 @@ const SingleProduct = () => {
                     <h1 className='mt-2 text-3xl font-semibold text-gray-800 '>
                         {productBrand}
                     </h1>
+                    <h1 className='mt-2 text-3xl font-semibold text-gray-800 '>
+                        {queryTitle}
+                    </h1>
 
                     <p className='mt-2 text-gray-600 '>{boycottingReasonDetails}</p>
-                    <p className='mt-6 text-sm font-bold text-gray-600 '>Buyer Details:</p>
+                    <p className='mt-6 text-sm font-bold text-gray-600 '>Posted User:</p>
                     <div className='flex items-center gap-5'>
                         <div>
-                            <p className='mt-2 text-sm  text-gray-600 '>Name : {user?.name}</p>
-                            <p className='mt-2 text-sm  text-gray-600 '>Email : {user?.email}</p>
+                            <p className='mt-2 text-sm  text-gray-600 '>Name : {addUser?.name}</p>
+                            <p className='mt-2 text-sm  text-gray-600 '>Email : {addUser?.email}</p>
                         </div>
                         <div className='rounded-full object-cover overflow-hidden w-14 h-14'>
-                            <img src={user?.productImgUrl} alt='' />
+                            <img src={addUser?.image} alt='' />
                         </div>
                     </div>
                     {/* <p className='mt-6 text-lg font-bold text-gray-600 '>

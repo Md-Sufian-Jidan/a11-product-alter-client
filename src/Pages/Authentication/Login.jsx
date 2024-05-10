@@ -9,6 +9,7 @@ const Login = () => {
     const { signIn, googleLogin, githubLogin } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
+    
     const handleLogin = (e) => {
         e.preventDefault();
         const form = e.target;

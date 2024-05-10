@@ -14,7 +14,7 @@ const ProductDetails = ({ query }) => {
                     <h2 className="md:text-xl font-bold">Product Name : {productName}</h2>
                     <h2 className="md:text-lg font-semibold">Product Brand: {productBrand}</h2>
                     <p>Query Title : {queryTitle}</p>
-                    <p title={boycottingReasonDetails}>Boycotting Reason :  {boycottingReasonDetails.substring(0, 20)}...</p>
+                    <p title={boycottingReasonDetails}>Boycotting Reason :  {boycottingReasonDetails?.substring(0, 20)}...</p>
                     <div>
                         <p>Posted Date : {new Date(dateTime).toLocaleDateString()}</p>
                     </div>

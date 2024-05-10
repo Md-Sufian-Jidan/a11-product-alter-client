@@ -32,7 +32,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/my-queries',
-                element: <PrivateRoute><MYQueries /></PrivateRoute>
+                element: <PrivateRoute><MYQueries /></PrivateRoute>,
             },
             {
                 path: '/all-queries',
