@@ -2,7 +2,9 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthProvider";
 import { Link } from "react-router-dom";
-
+import toast from "react-hot-toast";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 const MyQueries = () => {
     const { user } = useContext(AuthContext)
     const [queries, setQueries] = useState([])
@@ -16,8 +18,36 @@ const MyQueries = () => {
         setQueries(data);
     };
     console.log(queries);
-    const handleDelete = () => {
-        console.log('delete');
+    const handleDelete = (id) => {
+        console.log(id);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/deleted/${id}`)
+                    console.log(data)
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+                    //refresh ui
+                    getData()
+                } catch (err) {
+                    console.log(err.message)
+                    toast.error(err.message)
+                }
+
+            }
+        });
+
     }
     return (
         <div>

@@ -11,6 +11,7 @@ import AddQueries from '../Pages/AddQueries'
 import PrivateRoute from '../Context/PrivateRoute';
 import SingleProduct from "../Components/SingleProduct";
 import ErrorPage from "../Components/ErrorPage";
+import UpdateQueries from "../Components/UpdateQueries";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,11 @@ const router = createBrowserRouter([
             {
                 path: '/single-queries/:id',
                 element: <PrivateRoute><SingleProduct /></PrivateRoute>,
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/single-queries/${params.id}`)
+            },
+            {
+                path: '/update/:id',
+                element: <PrivateRoute><UpdateQueries /></PrivateRoute>,
                 loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/single-queries/${params.id}`)
             }
 
