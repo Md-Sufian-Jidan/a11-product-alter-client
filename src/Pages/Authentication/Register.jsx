@@ -2,33 +2,49 @@
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../Context/AuthProvider'
-import { FaGithub, FaGoogle } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [show, setShow] = useState(false);
-  const { googleLogin, createUser, updateUserProfile, user, setUser, isLoading } = useContext(AuthContext);
+  const { createUser, updateUserProfile, setUser, isLoading } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
+    const location = useLocation();
+    const navigate = useNavigate();
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const photo = form.photo.value;
     const password = form.password.value;
-    const user = { name, email, photo, password }
+    // const user = { name, email, photo, password };
+    if (password.length < 6) {
+      return toast.error('your password should at least 6 character long');
+    }
+    if (!/[A-Z]/.test(password)) {
+      return toast.error('Your password should contain a Capital letter')
+    }
+    if (!/[a-z]/.test(password)) {
+      return toast.error('Your password should contain a lower letter')
+    }
     // console.log(user);
     createUser(email, password)
       .then(res => {
         console.log(res.user);
-        toast.success('User Created Successfully')
+        toast.success('User Created Successfully');
         updateUserProfile(name, photo)
         // Optimistic UI Update
-        setUser({ ...res?.user, photoURL: photo, displayName: name })
+        setUser({ ...res?.user, photoURL: photo, displayName: name });
+        navigate(location?.state ? location?.state : '/');
       })
       .catch(err => {
         console.log(err);
       })
+  };
+
+  if (isLoading) {
+    return <p className="text-5xl text-center my-20">Loading...</p>
   }
   return (
     <div className="w-full max-w-sm p-6 m-auto mx-auto rounded-lg shadow-md  dark:bg-purple-600 my-5">
@@ -69,7 +85,9 @@ const Register = () => {
         </div>
       </form>
 
-      <p className="mt-8  font-light text-center text-gray-400">Already have an account? <a href="/login" className="font-medium text-gray-700 dark:text-gray-200 hover:underline">Login</a></p>
+      <p className="mt-8  font-light text-center text-gray-400">Already have an account?
+        <a href="/login" className="font-medium text-gray-700 dark:text-gray-200 hover:underline">Login</a>
+      </p>
     </div>
   )
 }

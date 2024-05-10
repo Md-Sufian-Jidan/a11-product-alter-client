@@ -2,16 +2,62 @@ import { useContext } from "react";
 import { AuthContext } from "../../Context/AuthProvider";
 import logo from '../../assets/productLogo.png'
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const { signIn } = useContext(AuthContext);
+    const { signIn, googleLogin, githubLogin } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
     const handleLogin = (e) => {
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
-        console.log('login');
+        if (password.length < 6) {
+            return toast.error('your password should at least 6 character long');
+        }
+        if (!/[A-Z]/.test(password)) {
+            return toast.error('Your password should contain a Capital letter')
+        }
+        if (!/[a-z]/.test(password)) {
+            return toast.error('Your password should contain a lower letter')
+        }
+        signIn(email, password)
+            .then(res => {
+                console.log(res.user);
+                toast.success('User Login Successfully');
+                navigate(location?.state ? location?.state : '/');
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(err.message)
+            })
+    };
+    const handleGoogleLogin = () => {
+        googleLogin()
+            .then(res => {
+                console.log(res.user);
+                toast.success('User Login Successfully');
+                navigate(location?.state ? location?.state : '/');
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(err.message)
+            })
+    }
+    const handleGithubLogin = () => {
+        githubLogin()
+            .then(res => {
+                console.log(res.user);
+                toast.success('User Login Successfully');
+                navigate(location?.state ? location?.state : '/');
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(err.message)
+            })
     }
     return (
         <section className="">
@@ -54,11 +100,11 @@ const Login = () => {
 
                         <p className="mt-4 divider text-xl text-center text-indigo-700">or sign in with</p>
 
-                        <button href="#" className="flex items-center justify-center px-6 py-3 mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 w-full bg-green-500">
+                        <button onClick={handleGoogleLogin} className="flex items-center justify-center px-6 py-3 mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 w-full bg-green-500">
                             <FaGoogle size={20} />
                             <span className="mx-2">Sign in with Google</span>
                         </button>
-                        <button href="#" className="flex items-center justify-center px-6 py-3 mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 w-full bg-black">
+                        <button onClick={handleGithubLogin} className="flex items-center justify-center px-6 py-3 mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg dark:border-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 w-full bg-black">
                             <FaGithub size={20} />
                             <span className="mx-2">Sign in with Github</span>
                         </button>
