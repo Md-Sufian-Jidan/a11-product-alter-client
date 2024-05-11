@@ -44,10 +44,8 @@ const MyQueries = () => {
                     console.log(err.message)
                     toast.error(err.message)
                 }
-
             }
         });
-
     }
     return (
         <div>
@@ -84,9 +82,9 @@ const MyQueries = () => {
                             </div>
 
                             <div className="flex items-center justify-between mt-4">
-                                <Link to={`/single-queries${query?._id}`} href="#" className="text-blue-600 dark:text-blue-400 hover:underline" role="link">View Details</Link>
+                                <Link to={`/single-queries/${query?._id}`} href="#" className="text-blue-600 dark:text-blue-400 hover:underline" role="link">View Details</Link>
 
-                                <button onClick={()=>handleDelete(query?._id)} className="text-rose-600 dark:text-rose-400 hover:underline" role="link">Delete</button>
+                                <button onClick={() => handleDelete(query?._id)} className="text-rose-600 dark:text-rose-400 hover:underline" role="link">Delete</button>
 
                                 <div className="flex items-center">
                                     <img className=" object-cover w-10 h-10 mx-4 rounded-full sm:block" src={query?.addUser.image} alt="avatar" />

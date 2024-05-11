@@ -1,65 +1,139 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Context/AuthProvider";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
+import toast from "react-hot-toast";
+import { MdDelete } from "react-icons/md";
+
 
 const MyRecommendations = () => {
+    const { user } = useContext(AuthContext);
 
-    const [queries, setQueries] = useState([])
+    const [recommendation, setRecommendation] = useState([])
 
     useEffect(() => {
         getData()
-    }, []);
+    }, [user]);
 
     const getData = async () => {
-        const { data } = await axios(`${import.meta.env.VITE_API_URL}/all-recommendation`);
-        setQueries(data);
+        const { data } = await axios(`${import.meta.env.VITE_API_URL}/all-recommendation/${user?.email}`);
+        setRecommendation(data);
     };
-    console.log(queries);
+    console.log(recommendation);
+    const handleDelete = (id, que_id) => {
+        console.log(id, que_id);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/recommendation-delete/${id}&${que_id}`, )
+                    console.log(data)
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your Query has been deleted.",
+                        icon: "success"
+                    });
+                    //refresh ui
+                    getData()
+                } catch (err) {
+                    console.log(err)
+                    toast.error(err.message)
+                }
+            }
+        });
+    }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-5">
-            {
-                queries?.map(query => (
-                    <div key={query._id} className="flex max-w-md overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 mx-auto">
-                        <div>
-                            <img src={query.recommendation_array[0].recommendation_product_img} alt="" />
-                        </div>
+        <section className="container px-4 mx-auto my-5">
+            <div className="flex flex-col mt-6">
+                <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                        <div className="overflow-hidden border border-gray-200 dark:border-slate-700 md:rounded-lg">
+                            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead className="bg-gray-50 dark:bg-indigo-800">
+                                    <tr>
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Query Product</th>
 
-                        <div className="w-2/3 p-4 md:p-4">
-                            <h1 className="text-xl font-bold text-gray-800 dark:text-white">{query.query_product}</h1>
+                                        <th scope="col" className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <div className="flex items-center gap-x-3">
+                                                <span>Alternative product</span>
+                                            </div>
+                                        </th>
 
-                            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Lorem ipsum dolor sit amet consectetur adipisicing elit In odit</p>
+                                        <th scope="col" className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <button className="flex items-center gap-x-2">
+                                                <span>Recommendation Date</span>
+                                            </button>
+                                        </th>
 
-                            <div className="flex mt-2 item-center">
-                                <svg className="w-5 h-5 text-gray-700 fill-current dark:text-gray-300" viewBox="0 0 24 24">
-                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
-                                </svg>
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <button className="flex items-center gap-x-2">
+                                                <span>Recommendation Reason</span>
+                                            </button>
+                                        </th>
 
-                                <svg className="w-5 h-5 text-gray-700 fill-current dark:text-gray-300" viewBox="0 0 24 24">
-                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
-                                </svg>
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Recommender Email address</th>
 
-                                <svg className="w-5 h-5 text-gray-700 fill-current dark:text-gray-300" viewBox="0 0 24 24">
-                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
-                                </svg>
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                            <span className="">Edit</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                    {
+                                        recommendation?.map((rec) => (
+                                            <tr key={rec._id}>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                    <div className="inline-flex items-center gap-x-3">
 
-                                <svg className="w-5 h-5 text-gray-500 fill-current" viewBox="0 0 24 24">
-                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
-                                </svg>
+                                                        <div className="flex items-center gap-x-2">
+                                                            <h2 className="font-medium text-gray-800 dark:text-white ">{rec?.query_product}</h2>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                    <div className="inline-flex items-center gap-x-3">
 
-                                <svg className="w-5 h-5 text-gray-500 fill-current" viewBox="0 0 24 24">
-                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
-                                </svg>
-                            </div>
+                                                        <div className="flex items-center gap-x-2">
+                                                            <img className="object-cover w-10 h-10 rounded-full" src={rec?.recommendation_product_img} alt="" />
+                                                            <div>
+                                                                <h2 className="font-medium text-gray-800 dark:text-white ">{rec?.recommendation_product}</h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                                    <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 dark:bg-gray-800">
 
-                            <div className="flex justify-between mt-3 item-center">
-                                <h1 className="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">$220</h1>
-                                <button className="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Add to Cart</button>
-                            </div>
+                                                        <h2 className="text-sm font-normal text-emerald-500">{new Date(rec.recommendation_date).toLocaleDateString()}</h2>
+                                                    </div>
+                                                </td>
+                                                <td title={rec?.recommendation_reason} className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{rec?.recommendation_reason?.substring(0, 20)}</td>
+                                                <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{rec?.recommendation_email}</td>
+                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                    <div className="flex items-center gap-x-6">
+                                                        <button onClick={() => handleDelete(rec?._id, rec?.query_id)} className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"><MdDelete size={20} />
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                ))
-            }
-        </div>
+                </div>
+            </div>
+        </section>
     );
 };
 
