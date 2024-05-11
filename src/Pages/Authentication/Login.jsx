@@ -78,7 +78,6 @@ const Login = () => {
                 <div className="lg:w-1/2 text-purple-600">
                     <img className="w-auto h-8 sm:h-8" src={logo} alt="" />
                     <h1 className="mt-4 md:text-lg">Welcome back</h1>
-
                     <h1 className="mt-4 text-2xl font-medium capitalize lg:text-3xl ">
                         login to your account
                     </h1>
@@ -93,7 +92,7 @@ const Login = () => {
                             </svg>
                         </span>
 
-                        <input type="email" className="block w-full py-3 text-lime-700 bg-white border rounded-lg px-11 dark:bg--300 dark:text-gray-700 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-500 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address" name="email" required/>
+                        <input type="email" className="block w-full py-3 text-lime-700 bg-white border rounded-lg px-11 dark:bg--300 dark:text-gray-700 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-500 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address" name="email" required />
                     </div>
 
                     <div className="relative flex items-center mt-4">
@@ -121,7 +120,6 @@ const Login = () => {
                             <FaGithub size={20} />
                             <span className="mx-2">Sign in with Github</span>
                         </button>
-
                         <div className="mt-6 text-center ">
                             <a href="/register" className="text-sm text-blue-500 hover:underline dark:text-blue-400">
                                 Don’t have an account yet? Sign up

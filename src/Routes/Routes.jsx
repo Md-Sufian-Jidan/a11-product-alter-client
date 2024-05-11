@@ -12,6 +12,7 @@ import PrivateRoute from '../Context/PrivateRoute';
 import SingleProduct from "../Components/SingleProduct";
 import ErrorPage from "../Components/ErrorPage";
 import UpdateQueries from "../Components/UpdateQueries";
+import MyRecommendations from "../Pages/MyRecommendations";
 
 const router = createBrowserRouter([
     {
@@ -36,8 +37,12 @@ const router = createBrowserRouter([
                 element: <PrivateRoute><MYQueries /></PrivateRoute>,
             },
             {
+                path: '/my-recommendations',
+                element: <PrivateRoute><MyRecommendations /></PrivateRoute>,
+            },
+            {
                 path: '/all-queries',
-                element: <AllQueries />
+                element: <PrivateRoute><AllQueries /></PrivateRoute>
             },
             {
                 path: '/add-queries',

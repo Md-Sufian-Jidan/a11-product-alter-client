@@ -1,17 +1,62 @@
 import { useContext, useState } from 'react';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthProvider';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const SingleProduct = () => {
     const { user } = useContext(AuthContext);
-    const [startDate, setStartDate] = useState(new Date());
     const query = useLoaderData();
-    const { _id, productName, queryTitle, productBrand, dateTime, boycottingReasonDetails, addUser } = query || {}
+    const { _id, productName, queryTitle, productBrand, dateTime, boycottingReasonDetails, recommendationCount, addUser } = query || {}
+    const [startDate, setStartDate] = useState(new Date());
+    // const navigate = useNavigate();
     console.log(query);
-    const handleFormSubmission = () => {
-        console.log('form submit');
+    const handleFormSubmission = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        // this things are previous
+        const query_id = _id;
+        const query_title = queryTitle;
+        const query_product = productName;
+        const posted_query = {
+            query_email: addUser?.email,
+            query_name: addUser?.name
+        }
+        const recommendation_title = form.recommendation_title.value;
+        const recommendation_product = form.recommendation_product.value;
+        const recommendation_product_img = form.recommendation_product_img.value;
+        const recommendation_email = form.recommendation_email.value;
+        const recommendation_reason = form.recommendation_reason.value;
+        const recommendation_date = startDate;
+        const recommendation_array = [
+            {
+                recommendation_title, recommendation_product, recommendation_product_img, recommendation_email, recommendation_reason, recommendation_date,
+            }
+        ];
+        // console.log(recommendation_array);
+        const recommendation_details = {
+            query_id, query_title, query_product, posted_query, recommendation_array
+        }
+        console.log(recommendation_details);
+        try {
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/recommendation`, recommendation_details)
+            toast.success('Recommendation Data Save Successfully');
+            // navigate('/my-')
+        } catch (err) {
+            toast.error(err.response?.data);
+            form.reset();
+        }
+        // try {
+        //     const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/recommendationCount/${_id}`, recommendation_details)
+        //     toast.success('Recommendation count updated Successfully');
+        //     // navigate('/my-')
+        // } catch (err) {
+        //     toast.error(err.response?.data);
+        //     form.reset();
+        // }
+
     }
     return (
         <div className='flex flex-col md:flex-row justify-around gap-5  items-center min-h-[calc(100vh-306px)] max-w-6xl mx-auto my-5'>
@@ -20,7 +65,7 @@ const SingleProduct = () => {
                 <div className='flex items-center justify-between'>
                     <span className='text-sm font-light text-gray-800 '>Deadline: {new Date(dateTime).toLocaleDateString()}
                     </span>
-                    <span className='px-4 py-1 text-xs text-blue-800 uppercase bg-blue-200 rounded-full '>
+                    <span className='px-4 py-1 text-xs text-blue-800 uppercase bg-fuchsia-200 rounded-full '>
                         Product Name : {productName}
                     </span>
                 </div>
@@ -42,6 +87,43 @@ const SingleProduct = () => {
                         </div>
                     </div>
                     <p className='mt-6 text-lg font-bold text-gray-600 '>Boycotting Reason : {boycottingReasonDetails}</p>
+                    <p>recommendationCount : {recommendationCount}</p>
+                    {/* <div className="flex max-w-md overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+                        <div className="w-1/3 bg-cover"></div>
+
+                        <div className="w-2/3 p-4 md:p-4">
+                            <h1 className="text-xl font-bold text-gray-800 dark:text-white">Backpack</h1>
+
+                            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Lorem ipsum dolor sit amet consectetur adipisicing elit In odit</p>
+
+                            <div className="flex mt-2 item-center">
+                                <svg className="w-5 h-5 text-gray-700 fill-current dark:text-gray-300" viewBox="0 0 24 24">
+                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
+                                </svg>
+
+                                <svg className="w-5 h-5 text-gray-700 fill-current dark:text-gray-300" viewBox="0 0 24 24">
+                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
+                                </svg>
+
+                                <svg className="w-5 h-5 text-gray-700 fill-current dark:text-gray-300" viewBox="0 0 24 24">
+                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
+                                </svg>
+
+                                <svg className="w-5 h-5 text-gray-500 fill-current" viewBox="0 0 24 24">
+                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
+                                </svg>
+
+                                <svg className="w-5 h-5 text-gray-500 fill-current" viewBox="0 0 24 24">
+                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
+                                </svg>
+                            </div>
+
+                            <div className="flex justify-between mt-3 item-center">
+                                <h1 className="text-lg font-bold text-gray-700 dark:text-gray-200 md:text-xl">$220</h1>
+                                <button className="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 dark:focus:bg-gray-600">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div> */}
                 </div>
             </div>
             {/* Place A Bid Form */}
@@ -96,7 +178,6 @@ const SingleProduct = () => {
                                 id='emailAddress'
                                 type='email'
                                 name='recommendation_email'
-                                disabled
                                 defaultValue={user?.email}
                                 className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md   focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
                             />
@@ -106,7 +187,7 @@ const SingleProduct = () => {
                             <label className='text-gray-700 ' htmlFor='comment'>Recommendation Reason</label>
                             <input
                                 id='comment'
-                                name='comment'
+                                name='recommendation_reason'
                                 type='text'
                                 className='block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md   focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring'
                             />

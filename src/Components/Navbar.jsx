@@ -28,7 +28,6 @@ const Navbar = () => {
             .then(() => {
                 Swal.fire({
                     icon: "success",
-                    title: "wow?",
                     text: "User log Out Successfully",
                 });
             })
@@ -53,10 +52,10 @@ const Navbar = () => {
                         user ?
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>Homepage</NavLink></li>
-                                <li><NavLink to="add-queries" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>Add Queries</NavLink></li>
-                                <li><NavLink to="all-queries" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>All Queries</NavLink></li>
-                                <li><NavLink to="my-queries" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>My Queries</NavLink></li>
-                                <li><NavLink to="my-recommendations" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>My Recommendations</NavLink></li>
+                                <li><NavLink to="/add-queries" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>Add Queries</NavLink></li>
+                                <li><NavLink to="/all-queries" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>All Queries</NavLink></li>
+                                <li><NavLink to="/my-queries" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>My Queries</NavLink></li>
+                                <li><NavLink to="/my-recommendations" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>My Recommendations</NavLink></li>
                             </ul> :
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>Homepage</NavLink></li>

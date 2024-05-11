@@ -26,7 +26,7 @@ const AddQueries = () => {
             image: user?.photoURL
         }
         const product = {
-            productName, productBrand, productImgUrl, dateTime, queryTitle, boycottingReasonDetails,recommendationCount, addUser
+            productName, productBrand, productImgUrl, dateTime, queryTitle, boycottingReasonDetails, recommendationCount, addUser
         };
         console.log(product);
         // save data in db

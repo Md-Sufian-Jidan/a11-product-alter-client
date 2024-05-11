@@ -6,47 +6,39 @@ import "swiper/css/bundle";
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 
 export default function Carousel() {
-  return (
-    <div>
-    <Swiper
-       // slidesPerView={2}
-       centeredSlides={true}
-       spaceBetween={30}
-       autoplay={{
-           delay: 2000
-       }}
-       pagination={{
-         type: 'fraction',
-       }}
-       navigation={true}
-       modules={[Autoplay, Navigation]}
-       loop={true}>
-       <SwiperSlide>
-           <div className="h-[60vh] w-full bg-cover bg-no-repeat bg-center bg-[url('https://i.imgur.com/0oaf5aH.jpeg')]">
-           </div>
-       </SwiperSlide>
-       <SwiperSlide>
-           <div className="h-[60vh] w-full bg-cover bg-no-repeat bg-center bg-[url('https://i.imgur.com/Ps080li.jpeg')]">
-           </div>
-       </SwiperSlide>
-       <SwiperSlide>
-           <div className="h-[60vh] w-full bg-cover bg-no-repeat bg-center bg-[url('https://i.imgur.com/eoqrvLO.jpeg')]">
-           </div>
-       </SwiperSlide>
-       <SwiperSlide>
-           <div className="h-[60vh] w-full bg-cover bg-no-repeat bg-center bg-[url('https://i.imgur.com/FFUs8R2.jpeg')]">
-           </div>
-       </SwiperSlide>
-       <SwiperSlide>
-           <div className="h-[60vh] w-full bg-cover bg-no-repeat bg-center bg-[url('https://i.imgur.com/NAvqMPI.jpeg')]">
-           </div>
-       </SwiperSlide>
-       <SwiperSlide>
-           <div className="h-[60vh] w-full bg-cover bg-no-repeat bg-center bg-[url('https://i.imgur.com/QEkmEV2.jpeg')]">
-           </div>
-       </SwiperSlide>
-   </Swiper>
-   
-</div>
-  )
+    return (
+        <div>
+            <Swiper
+                // slidesPerView={2}
+                centeredSlides={true}
+                spaceBetween={30}
+                autoplay={{
+                    delay: 2000
+                }}
+                pagination={{
+                    type: 'fraction',
+                }}
+                navigation={true}
+                modules={[Autoplay, Navigation]}
+                loop={true}>
+                <SwiperSlide>
+                    <div className="h-[60vh] w-full bg-cover bg-no-repeat bg-center bg-[url('https://i.ibb.co/YRQKQK4/small-plant-near-various-cosmetics-bottles-1.jpg')]">
+                    </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <div className="h-[60vh] w-full bg-cover bg-no-repeat bg-center bg-[url('https://i.ibb.co/b2MNCbJ/jonathan-kemper-FV5d-B0c-Gu2-M-unsplash-1.jpg')]">
+                    </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <div className="h-[60vh] w-full bg-cover bg-no-repeat bg-center bg-[url('https://i.ibb.co/Yfnb92T/oleg-guijinsky-2-CRg-KZAy-PXg-unsplash-1.jpg')]">
+                    </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <div className="h-[60vh] w-full bg-cover bg-no-repeat bg-center bg-[url('https://i.ibb.co/PTTcdyM/yanapi-senaud-6-HR8vpj-YUHo-unsplash-1.jpg')]">
+                    </div>
+                </SwiperSlide>
+            </Swiper>
+
+        </div>
+    )
 }
