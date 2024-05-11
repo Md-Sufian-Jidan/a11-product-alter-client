@@ -1,17 +1,22 @@
 // import axios from 'axios'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../Context/AuthProvider'
 import toast from "react-hot-toast";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [show, setShow] = useState(false);
-  const { createUser, updateUserProfile, setUser, isLoading } = useContext(AuthContext);
+  const { createUser, updateUserProfile, setUser, isLoading, user } = useContext(AuthContext);
+  // const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user) {
+      navigate('/')
+    }
+  }, [user]);
 
   const handleSubmit = (e) => {
-    const location = useLocation();
-    const navigate = useNavigate();
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -20,7 +25,7 @@ const Register = () => {
     const password = form.password.value;
     // const user = { name, email, photo, password };
     if (password.length < 6) {
-      return toast.error('your password should at least 6 character long');
+      return toast.error('Your password should at least 6 character long');
     }
     if (!/[A-Z]/.test(password)) {
       return toast.error('Your password should contain a Capital letter')
@@ -34,9 +39,9 @@ const Register = () => {
         console.log(res.user);
         toast.success('User Created Successfully');
         updateUserProfile(name, photo)
-        // Optimistic UI Update
+        //  Update user name and photo url
         setUser({ ...res?.user, photoURL: photo, displayName: name });
-        navigate(location?.state ? location?.state : '/');
+        // navigate('/login');
       })
       .catch(err => {
         console.log(err);
@@ -50,6 +55,7 @@ const Register = () => {
     <div className="w-full max-w-sm p-6 m-auto mx-auto rounded-lg shadow-md  dark:bg-purple-600 my-5">
       <div className="flex justify-center mx-auto">
         <img className="w-auto h-7 sm:h-8" src="../../assets/productLogo.png" alt="" />
+        <p className="">Register one</p>
       </div>
 
       <form onSubmit={handleSubmit} className="mt-6">

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../Context/AuthProvider";
 import logo from '../../assets/productLogo.png'
 import { FaGithub, FaGoogle } from "react-icons/fa";
@@ -6,16 +6,22 @@ import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const { signIn, googleLogin, githubLogin } = useContext(AuthContext);
+    const { signIn, googleLogin, githubLogin, user } = useContext(AuthContext);
     const location = useLocation();
+    const from = location?.state || '/'
     const navigate = useNavigate();
-    
-    const handleLogin = (e) => {
+    useEffect(() => {
+        if (user) {
+            navigate('/')
+        }
+    }, [user])
+
+    const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
+        // console.log(email, password);
         if (password.length < 6) {
             return toast.error('your password should at least 6 character long');
         }
@@ -30,7 +36,7 @@ const Login = () => {
                 console.log(res.user);
                 if (res.user) {
                     toast.success('User Login Successfully');
-                    navigate(location?.state ? location?.state : '/');
+                    navigate(from, { replace: true });
                 }
             })
             .catch((err) => {
@@ -44,7 +50,7 @@ const Login = () => {
                 console.log(res.user);
                 if (res.user) {
                     toast.success('User Login Successfully');
-                    navigate(location?.state ? location?.state : '/');
+                    navigate(from, { replace: true });
                 }
             })
             .catch((err) => {
@@ -58,7 +64,7 @@ const Login = () => {
                 console.log(res.user);
                 if (res.user) {
                     toast.success('User Login Successfully');
-                    navigate(location?.state ? location?.state : '/');
+                    navigate(from, { replace: true });
                 }
             })
             .catch((err) => {
@@ -68,17 +74,17 @@ const Login = () => {
     }
     return (
         <section className="">
-            <div className="container flex flex-col lg:flex-row items-center justify-center w-full p-6 m-auto mx-auto rounded-lg shadow-md dark:bg-pink-400  my-5">
+            <div className="container flex flex-col lg:flex-row items-center justify-center w-full p-6 m-auto mx-auto rounded-lg shadow-md bg-slate-300 dark:bg-pink-200  my-5">
                 <div className="lg:w-1/2 text-purple-600">
-                    <img className="w-auto h-7 sm:h-8" src={logo} alt="" />
+                    <img className="w-auto h-8 sm:h-8" src={logo} alt="" />
                     <h1 className="mt-4 md:text-lg">Welcome back</h1>
 
                     <h1 className="mt-4 text-2xl font-medium capitalize lg:text-3xl ">
                         login to your account
                     </h1>
                 </div>
-                <form onSubmit={handleLogin} className="w-full max-w-md">
-                    <h1 className="mt-3 text-2xl font-semibold text-purple-800 capitalize sm:text-3xl ">Login</h1>
+                <form onSubmit={handleSubmit} className="w-full max-w-md">
+                    {/* <h1 className="mt-3 text-2xl font-semibold text-purple-800 capitalize sm:text-3xl ">Login</h1> */}
 
                     <div className="relative flex items-center mt-8">
                         <span className="absolute">
@@ -87,7 +93,7 @@ const Login = () => {
                             </svg>
                         </span>
 
-                        <input type="email" className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address" name="email" />
+                        <input type="email" className="block w-full py-3 text-lime-700 bg-white border rounded-lg px-11 dark:bg--300 dark:text-gray-700 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-500 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address" name="email" required/>
                     </div>
 
                     <div className="relative flex items-center mt-4">
@@ -97,7 +103,7 @@ const Login = () => {
                             </svg>
                         </span>
 
-                        <input type="password" className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password" name="password" />
+                        <input type="password" className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg  dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password" name="password" required />
                     </div>
 
                     <div className="mt-6">

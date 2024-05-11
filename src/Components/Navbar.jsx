@@ -67,7 +67,7 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="navbar-center">
-                <a className="btn btn-ghost text-xl text-purple-400">Product Alter</a>
+                <Link to='/' className="btn btn-ghost text-xl text-purple-400">Product Alter</Link>
             </div>
             <div className="navbar-end">
                 <label className="swap swap-rotate">
