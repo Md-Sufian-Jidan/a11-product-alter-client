@@ -13,6 +13,7 @@ import SingleProduct from "../Components/SingleProduct";
 import ErrorPage from "../Components/ErrorPage";
 import UpdateQueries from "../Components/UpdateQueries";
 import MyRecommendations from "../Pages/MyRecommendations";
+import RecommendationForMe from "../Pages/RecommendationForMe";
 
 const router = createBrowserRouter([
     {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
                 path: '/update/:id',
                 element: <PrivateRoute><UpdateQueries /></PrivateRoute>,
                 loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/single-queries/${params.id}`)
+            },
+            {
+                path: '/recommendation-for-me',
+                element: <PrivateRoute><RecommendationForMe /></PrivateRoute>
             }
 
         ]

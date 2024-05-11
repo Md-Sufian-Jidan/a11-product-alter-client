@@ -56,6 +56,7 @@ const Navbar = () => {
                                 <li><NavLink to="/all-queries" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>All Queries</NavLink></li>
                                 <li><NavLink to="/my-queries" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>My Queries</NavLink></li>
                                 <li><NavLink to="/my-recommendations" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>My Recommendations</NavLink></li>
+                                <li><NavLink to="/recommendation-for-me" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>Recommendations for me</NavLink></li>
                             </ul> :
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>Homepage</NavLink></li>
