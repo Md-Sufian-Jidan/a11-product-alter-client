@@ -27,6 +27,10 @@ const SingleProduct = () => {
     console.log(recommendation);
 
     const handleFormSubmission = async (e) => {
+        if (user?.email === addUser?.email) {
+            return toast.error('err');
+            // return toast.error('Action not Permitted');
+        }
         e.preventDefault();
         const form = e.target;
         // this things are previous
@@ -47,7 +51,7 @@ const SingleProduct = () => {
         const recommendation_details = {
             query_id, query_title, query_product, posted_query, recommendation_title, recommendation_product, recommendation_product_img, recommendation_email, recommendation_reason, recommendation_date,
         }
-        console.log(recommendation_details);
+        // console.log(recommendation_details);
         try {
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/recommendation`, recommendation_details)
             toast.success('Recommendation Data Save Successfully');

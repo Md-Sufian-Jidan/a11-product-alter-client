@@ -58,7 +58,7 @@ const MyRecommendations = () => {
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden border border-gray-200 dark:border-slate-700 md:rounded-lg">
                             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead className="bg-gray-50 dark:bg-indigo-800">
+                                <thead className="bg-gray-50 dark:bg-pink-800/80">
                                     <tr>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Query Product</th>
 
@@ -87,7 +87,7 @@ const MyRecommendations = () => {
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                                <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-indigo-900/80">
                                     {
                                         recommendation?.map((rec) => (
                                             <tr key={rec._id}>

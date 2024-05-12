@@ -1,5 +1,20 @@
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Context/AuthProvider";
 
 const RecommendationForMe = () => {
+    const { user} = useContext(AuthContext);
+    const [recommendationForMe, setRecommendationForMe] = useState();
+
+    useEffect(() => {
+        getData()
+    }, [user]);
+
+    const getData = async () => {
+        const { data } = await axios(`${import.meta.env.VITE_API_URL}/recommendation-for-myself/${user?.email}`);
+        setRecommendationForMe(data);
+    };
+    console.log(recommendationForMe);
     return (
         <section className="container px-4 mx-auto my-5">
             <div className="flex flex-col mt-6">
@@ -7,7 +22,7 @@ const RecommendationForMe = () => {
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div className="overflow-hidden border border-gray-200 dark:border-slate-700 md:rounded-lg">
                             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead className="bg-gray-50 dark:bg-indigo-800">
+                                <thead className="bg-gray-50 dark:bg-sky-800/90">
                                     <tr>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Query Product</th>
 
@@ -30,16 +45,12 @@ const RecommendationForMe = () => {
                                         </th>
 
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Recommender Email address</th>
-
-                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                            <span className="">Edit</span>
-                                        </th>
                                     </tr>
                                 </thead>
-                                {/* <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"> */}
-                                    {/* { */}
-                                        {/* recommendation?.map((rec) => ( */}
-                                            {/* <tr key={rec._id}>
+                                <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-orange-800/70">
+                                    {
+                                        recommendationForMe?.map((rec) => (
+                                            <tr key={rec._id}>
                                                 <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                                     <div className="inline-flex items-center gap-x-3">
 
@@ -67,16 +78,11 @@ const RecommendationForMe = () => {
                                                 </td>
                                                 <td title={rec?.recommendation_reason} className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{rec?.recommendation_reason?.substring(0, 20)}</td>
                                                 <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{rec?.recommendation_email}</td>
-                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div className="flex items-center gap-x-6">
-                                                        {/* <button onClick={() => handleDelete(rec?._id, rec?.query_id)} className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"><MdDelete size={20} />
-                                                        </button> */}
-                                                    {/* </div> */}
-                                                {/* </td> */}
-                                            {/* </tr>  */}
-                                        {/* )) */}
-                                    {/* } */}
-                                {/* </tbody> */}
+                                               
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
                             </table>
                         </div>
                     </div>
