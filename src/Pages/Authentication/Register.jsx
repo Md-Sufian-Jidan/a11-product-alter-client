@@ -33,10 +33,8 @@ const Register = () => {
     if (!/[a-z]/.test(password)) {
       return toast.error('Your password should contain a lower letter')
     }
-    // console.log(user);
     createUser(email, password)
       .then(res => {
-        console.log(res.user);
         toast.success('User Created Successfully');
         updateUserProfile(name, photo)
         //  Update user name and photo url
@@ -44,7 +42,7 @@ const Register = () => {
         // navigate('/login');
       })
       .catch(err => {
-        console.log(err);
+        toast.error(err.message)
       })
   };
 

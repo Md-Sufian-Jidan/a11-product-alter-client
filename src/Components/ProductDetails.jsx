@@ -4,7 +4,7 @@ const ProductDetails = ({ query }) => {
     const { _id, productName, queryTitle, productBrand, productImgUrl, dateTime, boycottingReasonDetails } = query || {}
     return (
 
-        <div className=" overflow-hidden bg-white rounded-lg shadow-lg dark:bg-violet-300 w-96 mx-auto">
+        <div className=" overflow-hidden bg-white rounded-lg shadow-lg dark:bg-violet-300 w-[310px] mx-auto">
             <div>
                 <img className="object-cover w-full h-48 mt-2" src={productImgUrl} alt="Product Image" />
             </div>

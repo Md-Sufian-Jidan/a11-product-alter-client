@@ -28,14 +28,12 @@ const UpdateQueries = () => {
         const product = {
             productName, productBrand, productImgUrl, dateTime, queryTitle, boycottingReasonDetails, addUser
         };
-        console.log(product);
         // save data in db
         try {
             const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/update/${_id}`, product)
             toast.success('Product Data Updated Successfully!')
             navigate('/my-queries');
         } catch (err) {
-            console.log(err)
             toast.error(err.message)
         }
     }

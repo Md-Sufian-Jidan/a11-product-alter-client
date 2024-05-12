@@ -43,7 +43,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/all-queries',
-                element: <PrivateRoute><AllQueries /></PrivateRoute>
+                element: <AllQueries />
             },
             {
                 path: '/add-queries',
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/single-queries/:id',
-                element: <PrivateRoute><SingleProduct /></PrivateRoute>,
+                element: <SingleProduct />,
                 loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/single-queries/${params.id}`)
             },
             {

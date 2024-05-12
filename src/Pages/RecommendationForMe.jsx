@@ -11,10 +11,9 @@ const RecommendationForMe = () => {
     }, [user]);
 
     const getData = async () => {
-        const { data } = await axios(`${import.meta.env.VITE_API_URL}/recommendation-for-myself/${user?.email}`);
+        const { data } = await axios(`${import.meta.env.VITE_API_URL}/recommendation-for-myself/${user?.email}`, {withCredentials : true });
         setRecommendationForMe(data);
     };
-    console.log(recommendationForMe);
     return (
         <section className="container px-4 mx-auto my-5">
             <div className="flex flex-col mt-6">

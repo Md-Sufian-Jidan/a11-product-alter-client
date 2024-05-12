@@ -21,7 +21,6 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        // console.log(email, password);
         if (password.length < 6) {
             return toast.error('your password should at least 6 character long');
         }
@@ -33,42 +32,36 @@ const Login = () => {
         }
         signIn(email, password)
             .then(res => {
-                console.log(res.user);
                 if (res.user) {
                     toast.success('User Login Successfully');
                     navigate(from, { replace: true });
                 }
             })
             .catch((err) => {
-                console.log(err);
                 toast.error(err.message)
             })
     };
     const handleGoogleLogin = () => {
         googleLogin()
             .then(res => {
-                console.log(res.user);
                 if (res.user) {
                     toast.success('User Login Successfully');
                     navigate(from, { replace: true });
                 }
             })
             .catch((err) => {
-                console.log(err);
                 toast.error(err.message)
             })
     }
     const handleGithubLogin = () => {
         githubLogin()
             .then(res => {
-                console.log(res.user);
                 if (res.user) {
                     toast.success('User Login Successfully');
                     navigate(from, { replace: true });
                 }
             })
             .catch((err) => {
-                console.log(err);
                 toast.error(err.message)
             })
     }

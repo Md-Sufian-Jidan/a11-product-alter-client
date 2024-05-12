@@ -17,10 +17,9 @@ const MyRecommendations = () => {
     }, [user]);
 
     const getData = async () => {
-        const { data } = await axios(`${import.meta.env.VITE_API_URL}/all-recommendation/${user?.email}`);
+        const { data } = await axios(`${import.meta.env.VITE_API_URL}/all-recommendation/${user?.email}`, { withCredentials: true });
         setRecommendation(data);
     };
-    console.log(recommendation);
     const handleDelete = (id, que_id) => {
         console.log(id, que_id);
         Swal.fire({
@@ -34,8 +33,7 @@ const MyRecommendations = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/recommendation-delete/${id}&${que_id}`, )
-                    console.log(data)
+                    const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/recommendation-delete/${id}&${que_id}`,)
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your Query has been deleted.",
@@ -44,7 +42,6 @@ const MyRecommendations = () => {
                     //refresh ui
                     getData()
                 } catch (err) {
-                    console.log(err)
                     toast.error(err.message)
                 }
             }

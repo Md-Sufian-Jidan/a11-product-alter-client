@@ -15,7 +15,6 @@ const SingleProduct = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [recommendation, setRecommendation] = useState();
     const navigate = useNavigate();
-    console.log(query);
     useEffect(() => {
         getData()
     }, [user]);
@@ -24,13 +23,8 @@ const SingleProduct = () => {
         const { data } = await axios(`${import.meta.env.VITE_API_URL}/some-recommendation/${_id}`);
         setRecommendation(data);
     };
-    console.log(recommendation);
 
     const handleFormSubmission = async (e) => {
-        if (user?.email === addUser?.email) {
-            return toast.error('err');
-            // return toast.error('Action not Permitted');
-        }
         e.preventDefault();
         const form = e.target;
         // this things are previous
@@ -47,13 +41,11 @@ const SingleProduct = () => {
         const recommendation_email = form.recommendation_email.value;
         const recommendation_reason = form.recommendation_reason.value;
         const recommendation_date = startDate;
-        // console.log(recommendation_array);
         const recommendation_details = {
             query_id, query_title, query_product, posted_query, recommendation_title, recommendation_product, recommendation_product_img, recommendation_email, recommendation_reason, recommendation_date,
         }
-        // console.log(recommendation_details);
         try {
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/recommendation`, recommendation_details)
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/recommendation`, recommendation_details, { withCredentials: true })
             toast.success('Recommendation Data Save Successfully');
             form.reset();
             navigate('/my-recommendations');

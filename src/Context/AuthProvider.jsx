@@ -2,6 +2,7 @@ import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword,
 import { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/Firebase.config";
 import PropTypes from 'prop-types';
+import axios from "axios";
 
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
@@ -47,13 +48,29 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser)
             setIsLoading(false)
+            const userEmail = currentUser?.email || user?.email;
+            const loggedEmail = { email: userEmail };
+            console.log('current User', currentUser);
+            // if user exist then issue a token
+            if (currentUser) {
+                axios.post(`${import.meta.env.VITE_API_URL}/jwt`, loggedEmail, { withCredentials: true })
+                    .then((res) => {
+                        // console.log('token response', res.data);
+                    })
+            }
+            else {
+                axios.post(`${import.meta.env.VITE_API_URL}/logout`, loggedEmail, { withCredentials: true })
+                    .then((res) => {
+                        // console.log(res.data);
+                    })
+            }
         });
         return () => {
             unsubscribe();
         }
     }, []);
 
-    const userInfo = { user, isLoading, createUser, signIn, googleLogin,githubLogin, logOut, updateUserProfile, setUser }
+    const userInfo = { user, isLoading, createUser, signIn, googleLogin, githubLogin, logOut, updateUserProfile, setUser }
     return (
         <AuthContext.Provider value={userInfo}>
             {children}

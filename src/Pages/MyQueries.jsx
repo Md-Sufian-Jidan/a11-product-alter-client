@@ -14,12 +14,10 @@ const MyQueries = () => {
     }, [user]);
 
     const getData = async () => {
-        const { data } = await axios(`${import.meta.env.VITE_API_URL}/my-queries/${user?.email}`);
+        const { data } = await axios(`${import.meta.env.VITE_API_URL}/my-queries/${user?.email}`, { withCredentials: true });
         setQueries(data);
     };
-    console.log(queries);
     const handleDelete = (id) => {
-        console.log(id);
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -31,8 +29,7 @@ const MyQueries = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/deleted/${id}`)
-                    console.log(data)
+                    const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/deleted/${id}`, { withCredentials: true })
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your Query has been deleted.",
@@ -41,7 +38,6 @@ const MyQueries = () => {
                     //refresh ui
                     getData()
                 } catch (err) {
-                    console.log(err.message)
                     toast.error(err.message)
                 }
             }
@@ -56,7 +52,7 @@ const MyQueries = () => {
                 {/* banner text */}
                 <div className="lg:w-1/2 mx-10 ">
                     <div className="lg:max-w-lg mx-auto">
-                        <h1 className="text-3xl font-semibold text-gray-800 lg:text-4xl">Stay Informed, Speak Up: Explore Product <span className="text-blue-500 ">Queries</span></h1>
+                        <h1 className="text-3xl font-semibold text-pink-800/80 lg:text-4xl">Stay Informed, Speak Up: Explore Product <span className="text-blue-500 ">Queries</span></h1>
 
                         <p className="mt-3 text-gray-600 dark:text-gray-400">Discover and engage with queries related to product safety, quality, and transparency. Join the conversation, ask questions, and share insights to empower consumers and promote accountability in the marketplace. Together, we can drive positive change and advocate for safer products for all</p>
 
@@ -69,7 +65,7 @@ const MyQueries = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 my-5">
                 {
                     queries?.map((query) => (
-                        <div key={query._id} className="max-w-2xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                        <div key={query._id} className="max-w-2xl px-8 py-4 bg-white rounded-lg shadow-md dark:bg-slate-800/80">
                             <div className="flex items-center justify-between">
                                 <span className="text-sm font-light text-gray-600 dark:text-gray-400">Posted Date : {new Date(query.dateTime).toLocaleDateString()}</span>
                                 <Link to={`/update/${query?._id}`} className="px-3 py-1 text-sm font-bold text-gray-100 transition-colors duration-300 transform bg-gray-600 rounded cursor-pointer hover:bg-gray-500" role="button">Update</Link>

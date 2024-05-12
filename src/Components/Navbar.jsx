@@ -13,7 +13,6 @@ const Navbar = () => {
         document.querySelector('html').setAttribute('data-theme', localTheme)
     }, [theme]);
     const handleToggle = (e) => {
-        console.log(e.target.checked);
         if (e.target.checked) {
             setTheme('synthwave');
         }
@@ -60,14 +59,14 @@ const Navbar = () => {
                             </ul> :
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><NavLink to="/" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>Homepage</NavLink></li>
-                                <li><NavLink to="queries" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>Queries</NavLink></li>
+                                <li><NavLink to="/all-queries" className={({ isActive }) => isActive === true ? 'font-bold text-primary' : 'font-bold'}>All Queries</NavLink></li>
                             </ul>
                     }
 
                 </div>
             </div>
             <div className="navbar-center">
-                <Link to='/' className="btn btn-ghost text-xl text-purple-400">Product Alter</Link>
+                <p className="text-xl text-purple-400">Product Alter</p>
             </div>
             <div className="navbar-end">
                 <label className="swap swap-rotate">

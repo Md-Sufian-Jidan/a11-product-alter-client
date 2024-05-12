@@ -28,26 +28,24 @@ const AddQueries = () => {
         const product = {
             productName, productBrand, productImgUrl, dateTime, queryTitle, boycottingReasonDetails, recommendationCount, addUser
         };
-        console.log(product);
         // save data in db
         try {
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/add-product`, product)
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/add-product`, product, { withCredentials: true })
             toast.success('Job Data Updated Successfully!')
             navigate('/my-queries')
         } catch (err) {
-            console.log(err)
             toast.error(err.message)
         }
     }
     return (
         <div className='bg-[url()]'>
             <div className='text-center space-y-3 md:max-w-3xl mx-10 md:mx-auto'>
-                <h3 className='text-3xl font-bold '>Stay Vigilant, Stay Safe: Report Product Alerts</h3>
+                <h3 className='lg:text-3xl text-xl font-bold '>Stay Vigilant, Stay Safe: Report Product Alerts</h3>
                 <p className='md:text-xl font-semibold'>Join the community in ensuring product safety and transparency. Share your insights and contribute to a safer marketplace by reporting product alerts. Together, we can make informed choices and protect consumers worldwide</p>
                 <p>You can add a product Alternative</p>
             </div>
             <div className='flex justify-center items-center min-h-[calc(100vh-306px)] my-12'>
-                <section className='p-5 md:p-6 mx-auto bg-white rounded-md shadow-md w-3/4 m-auto'>
+                <section className='p-5 md:p-6 mx-auto bg-cyan-400/50 rounded-md shadow-md w-3/4 m-auto'>
                     <h2 className='text-lg font-semibold text-gray-700 capitalize text-center'>
                         Add a Query
                     </h2>
