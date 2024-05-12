@@ -14,6 +14,11 @@ const AllQueries = () => {
         const { data } = await axios(`${import.meta.env.VITE_API_URL}/queries?search=${search}`, { withCredentials: true });
         setQueries(data);
     };
+    const handleReset = async () => {
+        setSearch('');
+        const { data } = await axios(`${import.meta.env.VITE_API_URL}/queries`, { withCredentials: true });
+        setQueries(data);
+    }
     return (
         <div className="my-5">
             <div className="my-5 flex flex-col lg:flex-row justify-center items-center gap-5">
@@ -38,9 +43,12 @@ const AllQueries = () => {
                             className="btn bg-sky-400/60">Search</span>
                     </label>
                 </form>
+                <div>
+                    <button onClick={handleReset} className="btn bg-pink-900/30">Reset</button>
+                </div>
             </div>
             {/* all queries */}
-            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${grid} lg:gap-1 gap-5`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${grid} gap-5`}>
                 {
                     queries?.map(query => <ProductDetails key={query._id} query={query}></ProductDetails>)
                 }
