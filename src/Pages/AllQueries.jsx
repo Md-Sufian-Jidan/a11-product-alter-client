@@ -40,7 +40,7 @@ const AllQueries = () => {
                 </form>
             </div>
             {/* all queries */}
-            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${grid} gap-1`}>
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${grid} lg:gap-1 gap-5`}>
                 {
                     queries?.map(query => <ProductDetails key={query._id} query={query}></ProductDetails>)
                 }

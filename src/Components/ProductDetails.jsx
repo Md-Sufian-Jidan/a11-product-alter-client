@@ -4,7 +4,7 @@ const ProductDetails = ({ query }) => {
     const { _id, productName, queryTitle, productBrand, productImgUrl, dateTime, boycottingReasonDetails } = query || {}
     return (
 
-        <div className=" overflow-hidden bg-white rounded-lg shadow-lg dark:bg-violet-300 w-[310px] mx-auto">
+        <div className=" overflow-hidden bg-white rounded-lg shadow-lg dark:bg-violet-300 w-[310px] h-[470px] mx-auto relative">
             <div>
                 <img className="object-cover w-full h-48 mt-2" src={productImgUrl} alt="Product Image" />
             </div>
@@ -21,7 +21,7 @@ const ProductDetails = ({ query }) => {
                     Boycott Reason : </p> */}
             </div>
 
-            <div className="flex items-center justify-between px-4 py-2 bg-pink-900 ">
+            <div className="flex items-center justify-between px-4 py-2 bg-pink-900 absolute bottom-0">
                 <h1 className="text-lg font-bold text-white">Posted Date : {new Date(dateTime).toLocaleDateString()}</h1>
                 <Link to={`/single-queries/${_id}`} className="px-2 py-1 text-xs font-semibold text-gray-900 uppercase transition-colors duration-300 transform bg-white rounded hover:bg-gray-200 focus:bg-gray-400 focus:outline-none">View Details</Link>
             </div>
