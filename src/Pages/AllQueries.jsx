@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import ProductDetails from "../Components/ProductDetails";
 
 const AllQueries = () => {
-    const [queries, setQueries] = useState();
     const [grid, setGrid] = useState(3);
+
+    const [queries, setQueries] = useState();
     const [search, setSearch] = useState('');
     useEffect(() => {
         getData()
@@ -14,6 +15,7 @@ const AllQueries = () => {
         const { data } = await axios(`${import.meta.env.VITE_API_URL}/queries?search=${search}`, { withCredentials: true });
         setQueries(data);
     };
+    
     const handleReset = async () => {
         setSearch('');
         const { data } = await axios(`${import.meta.env.VITE_API_URL}/queries`, { withCredentials: true });

@@ -3,7 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../Context/AuthProvider'
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [show, setShow] = useState(false);
@@ -39,7 +39,7 @@ const Register = () => {
         updateUserProfile(name, photo)
         //  Update user name and photo url
         setUser({ ...res?.user, photoURL: photo, displayName: name });
-        // navigate('/login');
+        navigate('/login');
       })
       .catch(err => {
         toast.error(err.message)
@@ -90,7 +90,7 @@ const Register = () => {
       </form>
 
       <p className="mt-8  font-light text-center text-gray-400">Already have an account?
-        <a href="/login" className="font-medium text-gray-700 dark:text-gray-200 hover:underline">Login</a>
+        <Link to="/login" className="font-medium text-gray-700 dark:text-gray-200 hover:underline">Login</Link>
       </p>
     </div>
   )

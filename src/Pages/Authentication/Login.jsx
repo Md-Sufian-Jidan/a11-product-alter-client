@@ -3,7 +3,7 @@ import { AuthContext } from "../../Context/AuthProvider";
 import logo from '../../assets/productLogo.png'
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const { signIn, googleLogin, githubLogin, user } = useContext(AuthContext);
@@ -106,9 +106,9 @@ const Login = () => {
 
                             <p className="mt-4 divider text-xl text-center text-indigo-700">or sign in with</p>
                             <div className="mt-6 text-center ">
-                                <a href="/register" className="text-sm text-blue-500 hover:underline dark:text-blue-400">
+                                <Link to="/register" className="text-sm text-blue-500 hover:underline dark:text-blue-400">
                                     Don’t have an account yet? Sign up
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </form>
